@@ -1,55 +1,114 @@
-function darkMode() {
-    document.body.classList.toggle("dark");
-}
-const text = "Web Developer | AI Enthusiast";
-let i = 0;
+// =========================
+// Typing Animation
+// =========================
 
-function typing() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typing, 100);
-    }
-}
-
-typing();
 const text = "Hi, I'm Bipul Babu";
-let i = 0;
+let index = 0;
 
-function typingEffect() {
-    if (i < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(i);
-        i++;
-        setTimeout(typingEffect, 100);
+function typeText() {
+    if (index < text.length) {
+        document.getElementById("typing").innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeText, 100);
     }
 }
 
-typingEffect();
+window.onload = () => {
+    typeText();
+};
+
+// =========================
+// Dark Mode
+// =========================
+
+const themeBtn = document.getElementById("theme-btn");
+
+themeBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+
+    if (document.body.classList.contains("dark")) {
+        themeBtn.innerHTML = "☀️";
+    } else {
+        themeBtn.innerHTML = "🌙";
+    }
+});
+
+// =========================
 // Back To Top Button
+// =========================
 
 const topBtn = document.getElementById("topBtn");
 
-window.onscroll = function () {
+window.addEventListener("scroll", () => {
 
-    if(document.body.scrollTop > 300 || document.documentElement.scrollTop > 300){
-        topBtn.style.display="block";
-    }else{
-        topBtn.style.display="none";
+    if (window.scrollY > 300) {
+        topBtn.style.display = "block";
+    } else {
+        topBtn.style.display = "none";
     }
 
-    document.querySelectorAll(".card").forEach(card=>{
-        const position = card.getBoundingClientRect().top;
+    revealCards();
+});
 
-        if(position < window.innerHeight - 100){
-            card.classList.add("show");
-        }
-    });
+topBtn.addEventListener("click", () => {
 
-};
-
-function topFunction(){
     window.scrollTo({
-        top:0,
-        behavior:"smooth"
+        top: 0,
+        behavior: "smooth"
     });
+
+});
+
+// =========================
+// Scroll Reveal Animation
+// =========================
+
+function revealCards() {
+
+    const cards = document.querySelectorAll(".card, .project-card");
+
+    cards.forEach(card => {
+
+        const top = card.getBoundingClientRect().top;
+
+        if (top < window.innerHeight - 100) {
+
+            card.style.opacity = "1";
+            card.style.transform = "translateY(0)";
+
+        }
+
+    });
+
 }
+
+document.querySelectorAll(".card, .project-card").forEach(card => {
+
+    card.style.opacity = "0";
+    card.style.transform = "translateY(40px)";
+    card.style.transition = "0.8s";
+
+});
+
+// First reveal
+revealCards();
+
+// =========================
+// Smooth Navigation
+// =========================
+
+document.querySelectorAll('nav a').forEach(link => {
+
+    link.addEventListener("click", function (e) {
+
+        e.preventDefault();
+
+        const id = this.getAttribute("href");
+
+        document.querySelector(id).scrollIntoView({
+            behavior: "smooth"
+        });
+
+    });
+
+});
