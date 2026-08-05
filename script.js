@@ -1,114 +1,207 @@
-// =========================
+// ===========================
+// PREMIUM PORTFOLIO SCRIPT
+// ===========================
+
 // Typing Animation
-// =========================
+const typingElement = document.getElementById("typing");
+const words = [
+    "Bipul Babu",
+    "Web Developer",
+    "AI Enthusiast",
+    "Computer Science Student"
+];
 
-const text = "Hi, I'm Bipul Babu";
-let index = 0;
+let wordIndex = 0;
+let charIndex = 0;
+let deleting = false;
 
-function typeText() {
-    if (index < text.length) {
-        document.getElementById("typing").innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeText, 100);
+function typeEffect() {
+
+    const currentWord = words[wordIndex];
+
+    if (!deleting) {
+
+        typingElement.textContent =
+            currentWord.substring(0, charIndex++);
+
+        if (charIndex > currentWord.length) {
+            deleting = true;
+            setTimeout(typeEffect, 1200);
+            return;
+        }
+
+    } else {
+
+        typingElement.textContent =
+            currentWord.substring(0, charIndex--);
+
+        if (charIndex < 0) {
+            deleting = false;
+            wordIndex++;
+
+            if (wordIndex >= words.length)
+                wordIndex = 0;
+        }
+
     }
+
+    setTimeout(typeEffect, deleting ? 60 : 120);
 }
 
-window.onload = () => {
-    typeText();
-};
+typeEffect();
 
-// =========================
+
+// ===========================
 // Dark Mode
-// =========================
+// ===========================
 
 const themeBtn = document.getElementById("theme-btn");
 
-themeBtn.addEventListener("click", () => {
+themeBtn.onclick = () => {
+
     document.body.classList.toggle("dark");
 
-    if (document.body.classList.contains("dark")) {
-        themeBtn.innerHTML = "☀️";
-    } else {
-        themeBtn.innerHTML = "🌙";
-    }
-});
-
-// =========================
-// Back To Top Button
-// =========================
-
-const topBtn = document.getElementById("topBtn");
-
-window.addEventListener("scroll", () => {
-
-    if (window.scrollY > 300) {
-        topBtn.style.display = "block";
-    } else {
-        topBtn.style.display = "none";
+    if(document.body.classList.contains("dark")){
+        themeBtn.innerHTML="☀️";
+    }else{
+        themeBtn.innerHTML="🌙";
     }
 
-    revealCards();
-});
+};
 
-topBtn.addEventListener("click", () => {
 
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
+// ===========================
+// Scroll Reveal
+// ===========================
 
-});
+const observer = new IntersectionObserver(entries=>{
 
-// =========================
-// Scroll Reveal Animation
-// =========================
+entries.forEach(entry=>{
 
-function revealCards() {
+if(entry.isIntersecting){
 
-    const cards = document.querySelectorAll(".card, .project-card");
-
-    cards.forEach(card => {
-
-        const top = card.getBoundingClientRect().top;
-
-        if (top < window.innerHeight - 100) {
-
-            card.style.opacity = "1";
-            card.style.transform = "translateY(0)";
-
-        }
-
-    });
+entry.target.classList.add("show");
 
 }
 
-document.querySelectorAll(".card, .project-card").forEach(card => {
-
-    card.style.opacity = "0";
-    card.style.transform = "translateY(40px)";
-    card.style.transition = "0.8s";
+});
 
 });
 
-// First reveal
-revealCards();
+document.querySelectorAll(".card,.project-card,.skill").forEach(el=>{
 
-// =========================
-// Smooth Navigation
-// =========================
+el.classList.add("hidden");
 
-document.querySelectorAll('nav a').forEach(link => {
+observer.observe(el);
 
-    link.addEventListener("click", function (e) {
+});
 
-        e.preventDefault();
 
-        const id = this.getAttribute("href");
+// ===========================
+// Back To Top
+// ===========================
 
-        document.querySelector(id).scrollIntoView({
-            behavior: "smooth"
-        });
+const topBtn=document.getElementById("topBtn");
+
+window.addEventListener("scroll",()=>{
+
+if(window.scrollY>400){
+
+topBtn.style.display="block";
+
+}else{
+
+topBtn.style.display="none";
+
+}
+
+});
+
+topBtn.onclick=()=>{
+
+window.scrollTo({
+
+top:0,
+
+behavior:"smooth"
+
+});
+
+};
+
+
+
+
+
+
+// Close menu when clicking a navigation link
+
+document.querySelectorAll("#nav-links a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        navLinks.classList.remove("active");
+
+        menuIcon.classList.remove("fa-xmark");
+        menuIcon.classList.add("fa-bars");
 
     });
 
 });
+
+
+// Close menu when clicking outside
+
+document.addEventListener("click", (event) => {
+
+    const navbar = document.querySelector("nav");
+
+    if (
+        navLinks.classList.contains("active") &&
+        !navbar.contains(event.target)
+    ) {
+
+        navLinks.classList.remove("active");
+
+        menuIcon.classList.remove("fa-xmark");
+        menuIcon.classList.add("fa-bars");
+
+    }
+
+});
+
+
+
+// ===== MOBILE HAMBURGER MENU =====
+
+const menuToggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+const menuIcon = menuToggle.querySelector("i");
+
+menuToggle.addEventListener("click", () => {
+
+    navLinks.classList.toggle("active");
+
+    if (navLinks.classList.contains("active")) {
+        menuIcon.classList.remove("fa-bars");
+        menuIcon.classList.add("fa-xmark");
+    } else {
+        menuIcon.classList.remove("fa-xmark");
+        menuIcon.classList.add("fa-bars");
+    }
+
+});
+
+
+// Close menu after clicking a link
+document.querySelectorAll("#nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+
+        navLinks.classList.remove("active");
+
+        menuIcon.classList.remove("fa-xmark");
+        menuIcon.classList.add("fa-bars");
+
+    });
+});
+
