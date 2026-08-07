@@ -325,17 +325,8 @@ function closeCart() {
 ========================= */
 
 function checkout() {
-
-    if (cart.length === 0) {
-
-        showToast("Your cart is empty");
-
-        return;
-    }
-
-    showToast("Checkout page coming soon!");
+    openCheckout();
 }
-
 
 /* =========================
    CATEGORY FILTER
