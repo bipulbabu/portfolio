@@ -512,3 +512,39 @@ document.addEventListener("DOMContentLoaded", () => {
     displayProducts();
     updateCart();
 });
+
+
+function toggleDarkMode() {
+    document.body.classList.toggle("dark-mode");
+
+    const isDark =
+        document.body.classList.contains("dark-mode");
+
+    localStorage.setItem("shopzoneDarkMode", isDark);
+
+    updateThemeIcon();
+}
+
+function updateThemeIcon() {
+    const icon = document.getElementById("themeIcon");
+
+    if (!icon) return;
+
+    const isDark =
+        document.body.classList.contains("dark-mode");
+
+    icon.className = isDark
+        ? "fa-solid fa-sun"
+        : "fa-solid fa-moon";
+}
+
+function loadDarkMode() {
+    if (localStorage.getItem("shopzoneDarkMode") === "true") {
+        document.body.classList.add("dark-mode");
+    }
+
+    updateThemeIcon();
+}
+
+loadDarkMode();
+
