@@ -57,6 +57,11 @@
 <button class="theme-btn" onclick="toggleDarkMode()" title="Toggle Dark Mode">
     <i class="fa-solid fa-moon" id="themeIcon"></i>
 </button>
+
+<button class="login-btn" onclick="openLogin()">
+    <i class="fa-solid fa-user"></i>
+    Login
+</button>
     
     <div class="cart" onclick="openCart()">
         <i class="fa-solid fa-cart-shopping"></i>
@@ -269,6 +274,188 @@
 
 </div>
 
+    <!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+
+    <div class="modal-box">
+
+        <button class="modal-close" onclick="closeLogin()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <div class="modal-icon">
+            <i class="fa-solid fa-user"></i>
+        </div>
+
+        <h2>Welcome Back!</h2>
+        <p class="modal-subtitle">
+            Login to continue shopping
+        </p>
+
+        <form onsubmit="loginUser(event)">
+
+            <label>Email Address</label>
+
+            <input
+                type="email"
+                id="loginEmail"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label>Password</label>
+
+            <input
+                type="password"
+                id="loginPassword"
+                placeholder="Enter your password"
+                required
+            >
+
+            <div class="login-options">
+                <label>
+                    <input type="checkbox">
+                    Remember me
+                </label>
+
+                <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="primary-action">
+                Login
+            </button>
+
+        </form>
+
+        <p class="signup-text">
+            Don't have an account?
+            <a href="#">Create Account</a>
+        </p>
+
+    </div>
+
+</div>
+
+
+<!-- CHECKOUT MODAL -->
+<div class="modal-overlay" id="checkoutModal">
+
+    <div class="checkout-box">
+
+        <button class="modal-close" onclick="closeCheckout()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>
+            <i class="fa-solid fa-credit-card"></i>
+            Checkout
+        </h2>
+
+        <div class="checkout-content">
+
+            <div class="checkout-form">
+
+                <h3>Delivery Information</h3>
+
+                <input
+                    type="text"
+                    id="checkoutName"
+                    placeholder="Full Name"
+                    required
+                >
+
+                <input
+                    type="tel"
+                    id="checkoutPhone"
+                    placeholder="Phone Number"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="checkoutAddress"
+                    placeholder="Address"
+                    required
+                >
+
+                <div class="two-inputs">
+
+                    <input
+                        type="text"
+                        placeholder="City"
+                        required
+                    >
+
+                    <input
+                        type="text"
+                        placeholder="PIN Code"
+                        required
+                    >
+
+                </div>
+
+                <h3>Payment Method</h3>
+
+                <label class="payment-option">
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="cod"
+                        checked
+                    >
+                    <i class="fa-solid fa-money-bill"></i>
+                    Cash on Delivery
+                </label>
+
+                <label class="payment-option">
+                    <input
+                        type="radio"
+                        name="payment"
+                        value="online"
+                    >
+                    <i class="fa-solid fa-credit-card"></i>
+                    Online Payment
+                </label>
+
+                <button
+                    class="primary-action"
+                    onclick="placeOrder()">
+                    Place Order
+                </button>
+
+            </div>
+
+
+            <div class="order-summary">
+
+                <h3>Order Summary</h3>
+
+                <div id="checkoutItems"></div>
+
+                <div class="summary-row">
+                    <span>Subtotal</span>
+                    <strong id="checkoutSubtotal">₹0</strong>
+                </div>
+
+                <div class="summary-row">
+                    <span>Delivery</span>
+                    <strong>FREE</strong>
+                </div>
+
+                <hr>
+
+                <div class="summary-total">
+                    <span>Total</span>
+                    <strong id="checkoutTotal">₹0</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
 <script src="script.js"></script>
 
