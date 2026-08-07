@@ -548,3 +548,123 @@ function loadDarkMode() {
 
 loadDarkMode();
 
+/* =========================
+   LOGIN
+========================= */
+
+function openLogin() {
+    document.getElementById("loginModal").style.display = "flex";
+}
+
+function closeLogin() {
+    document.getElementById("loginModal").style.display = "none";
+}
+
+function loginUser(event) {
+
+    event.preventDefault();
+
+    const email =
+        document.getElementById("loginEmail").value;
+
+    if (!email) return;
+
+    localStorage.setItem("shopzoneUser", email);
+
+    closeLogin();
+
+    showToast("Login successful! 👋");
+}
+
+
+/* =========================
+   CHECKOUT
+========================= */
+
+function openCheckout() {
+
+    if (cart.length === 0) {
+        showToast("Your cart is empty");
+        return;
+    }
+
+    const modal =
+        document.getElementById("checkoutModal");
+
+    modal.style.display = "flex";
+
+    displayCheckoutItems();
+}
+
+
+function closeCheckout() {
+
+    document.getElementById("checkoutModal")
+        .style.display = "none";
+}
+
+
+function displayCheckoutItems() {
+
+    const container =
+        document.getElementById("checkoutItems");
+
+    if (!container) return;
+
+    container.innerHTML = cart.map(item => `
+        <div class="checkout-item">
+
+            <span>${item.name}</span>
+
+            <strong>
+                ₹${item.price.toLocaleString("en-IN")}
+            </strong>
+
+        </div>
+    `).join("");
+
+    const total = cart.reduce(
+        (sum, item) => sum + item.price,
+        0
+    );
+
+    document.getElementById("checkoutSubtotal")
+        .textContent = `₹${total.toLocaleString("en-IN")}`;
+
+    document.getElementById("checkoutTotal")
+        .textContent = `₹${total.toLocaleString("en-IN")}`;
+}
+
+
+/* =========================
+   PLACE ORDER
+========================= */
+
+function placeOrder() {
+
+    const name =
+        document.getElementById("checkoutName").value;
+
+    const phone =
+        document.getElementById("checkoutPhone").value;
+
+    const address =
+        document.getElementById("checkoutAddress").value;
+
+    if (!name || !phone || !address) {
+
+        showToast("Please fill delivery details");
+
+        return;
+    }
+
+    closeCheckout();
+
+    cart = [];
+
+    saveCart();
+    updateCart();
+
+    showToast("Order placed successfully! 🎉");
+}
+
