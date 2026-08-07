@@ -659,3 +659,38 @@ function placeOrder() {
     showToast("Order placed successfully! 🎉");
 }
 
+// ===== PRODUCT SEARCH =====
+
+const searchInput = document.getElementById("searchInput");
+const searchBtn = document.getElementById("searchBtn");
+
+function searchProducts() {
+    const searchText = searchInput.value.trim().toLowerCase();
+
+    const products = document.querySelectorAll(".product-card");
+
+    products.forEach(product => {
+        const productText = product.textContent.toLowerCase();
+
+        if (searchText === "" || productText.includes(searchText)) {
+            product.style.display = "";
+        } else {
+            product.style.display = "none";
+        }
+    });
+}
+
+if (searchInput) {
+    searchInput.addEventListener("input", searchProducts);
+
+    searchInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            searchProducts();
+        }
+    });
+}
+
+if (searchBtn) {
+    searchBtn.addEventListener("click", searchProducts);
+}
+
