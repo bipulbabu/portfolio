@@ -75,6 +75,28 @@ const products = [
 
 let cart = JSON.parse(localStorage.getItem("shopzoneCart")) || [];
 
+let wishlist =
+    JSON.parse(localStorage.getItem("shopzoneWishlist")) || [];
+
+function toggleWishlist(id) {
+    const product = products.find(item => item.id === id);
+    if (!product) return;
+
+    if (wishlist.includes(id)) {
+        wishlist = wishlist.filter(item => item !== id);
+        showToast(`${product.name} removed from wishlist`);
+    } else {
+        wishlist.push(id);
+        showToast(`${product.name} added to wishlist ❤️`);
+    }
+
+    localStorage.setItem(
+        "shopzoneWishlist",
+        JSON.stringify(wishlist)
+    );
+
+    displayProducts();
+}
 
 /* =========================
    PRODUCT DISPLAY
@@ -103,8 +125,15 @@ function displayProducts(list = products) {
         <div class="product-card">
 
             <div class="product-image">
-                ${product.icon}
-            </div>
+    ${product.icon}
+
+    <button
+        class="wishlist-btn"
+        onclick="toggleWishlist(${product.id})"
+        title="Add to Wishlist">
+        <i class="fa-solid fa-heart"></i>
+    </button>
+</div>
 
             <div class="product-info">
 
