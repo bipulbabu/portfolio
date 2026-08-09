@@ -1072,3 +1072,30 @@ input:focus {
     }
 }
 
+/* ===== MOBILE SEARCH BAR ===== */
+@media (max-width: 768px) {
+  .search-box {
+    display: flex !important;
+    width: 100%;
+    margin: 10px 0;
+    order: 10;
+  }
+
+  .search-box select {
+    display: block !important;
+  }
+
+  .search-box input {
+    display: block !important;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .search-box button {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+  }
+}
+
