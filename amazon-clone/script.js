@@ -698,10 +698,32 @@ function mobileSearchProducts() {
     const input = document.getElementById("mobileSearchInput");
     const query = input.value.trim().toLowerCase();
 
+    const products = document.querySelectorAll(".product-card");
+
     if (!query) {
-        alert("Please enter a product name.");
+        products.forEach(product => {
+            product.style.display = "";
+        });
         return;
     }
+
+    let found = false;
+
+    products.forEach(product => {
+        const productText = product.innerText.toLowerCase();
+
+        if (productText.includes(query)) {
+            product.style.display = "";
+            found = true;
+        } else {
+            product.style.display = "none";
+        }
+    });
+
+    if (!found) {
+        alert("No products found for: " + input.value);
+    }
+}
 
     const products = document.querySelectorAll(".product-card");
 
