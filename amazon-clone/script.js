@@ -694,16 +694,25 @@ if (searchBtn) {
     searchBtn.addEventListener("click", searchProducts);
 }
 
+
+
 function mobileSearchProducts() {
     const input = document.getElementById("mobileSearchInput");
     const query = input.value.trim().toLowerCase();
 
     const products = document.querySelectorAll(".product-card");
+    const categories = document.querySelector(".categories");
+    const hero = document.querySelector(".hero");
+    const productsSection = document.querySelector(".products");
 
     if (!query) {
         products.forEach(product => {
             product.style.display = "";
         });
+
+        if (categories) categories.style.display = "";
+        if (hero) hero.style.display = "";
+
         return;
     }
 
@@ -720,16 +729,22 @@ function mobileSearchProducts() {
         }
     });
 
-    if (!found) {
+    if (found) {
+        // Hide sections before search results
+        if (categories) categories.style.display = "none";
+        if (hero) hero.style.display = "none";
+
+        // Go directly to products
+        if (productsSection) {
+            productsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+    } else {
         alert("No products found for: " + input.value);
     }
 }
 
-    const products = document.querySelectorAll(".product-card");
 
-    products.forEach(product => {
-        const text = product.innerText.toLowerCase();
-        product.style.display = text.includes(query) ? "" : "none";
-    });
-}
 
