@@ -694,3 +694,20 @@ if (searchBtn) {
     searchBtn.addEventListener("click", searchProducts);
 }
 
+function mobileSearchProducts() {
+    const input = document.getElementById("mobileSearchInput");
+    const query = input.value.trim().toLowerCase();
+
+    if (!query) {
+        alert("Please enter a product name.");
+        return;
+    }
+
+    const products = document.querySelectorAll(".product-card");
+
+    products.forEach(product => {
+        const text = product.innerText.toLowerCase();
+        product.style.display = text.includes(query) ? "" : "none";
+    });
+}
+
