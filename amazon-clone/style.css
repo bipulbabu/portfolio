@@ -1231,3 +1231,144 @@ input:focus {
     color: #e63946 !important;
 }
 
+/* =========================
+   WISHLIST HEADER
+========================= */
+
+.wishlist-header-btn {
+    position: relative;
+    border: 0;
+    background: transparent;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    white-space: nowrap;
+    padding: 8px 5px;
+}
+
+.wishlist-header-btn i {
+    color: #ff5a6f;
+    font-size: 20px;
+    margin-right: 4px;
+}
+
+#wishlistCount {
+    position: absolute;
+    top: -4px;
+    left: 16px;
+    min-width: 18px;
+    height: 18px;
+    padding: 1px 4px;
+    border-radius: 50%;
+    background: #ff5a36;
+    color: white;
+    font-size: 11px;
+    text-align: center;
+}
+
+/* =========================
+   WISHLIST PANEL
+========================= */
+
+.wishlist-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,.55);
+    z-index: 9998;
+    justify-content: flex-end;
+}
+
+.wishlist-panel {
+    width: 390px;
+    max-width: 92%;
+    height: 100%;
+    background: white;
+    padding: 25px;
+    overflow-y: auto;
+    box-shadow: -8px 0 30px rgba(0,0,0,.2);
+    position: relative;
+}
+
+.wishlist-panel h2 {
+    margin-bottom: 25px;
+    color: #172033;
+}
+
+.wishlist-panel h2 i {
+    color: #e63946;
+    margin-right: 8px;
+}
+
+.wishlist-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    border: 0;
+    background: #f2f4f7;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+.wishlist-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 16px 0;
+    border-bottom: 1px solid #eaecf0;
+}
+
+.wishlist-item-info {
+    flex: 1;
+}
+
+.wishlist-item-info h3 {
+    font-size: 15px;
+    margin-bottom: 6px;
+}
+
+.wishlist-item-info strong {
+    color: #e63946;
+}
+
+.wishlist-remove {
+    border: 0;
+    background: #fff0f1;
+    color: #e63946;
+    padding: 8px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.wishlist-empty {
+    text-align: center;
+    padding: 60px 15px;
+    color: #667085;
+}
+
+.wishlist-empty i {
+    font-size: 50px;
+    color: #e63946;
+    margin-bottom: 15px;
+}
+
+@media (max-width: 650px) {
+    .wishlist-header-btn {
+        font-size: 0;
+    }
+
+    .wishlist-header-btn i {
+        font-size: 20px;
+        margin: 0;
+    }
+
+    .wishlist-panel {
+        width: 100%;
+        max-width: 100%;
+    }
+}
+
