@@ -130,8 +130,8 @@ function displayProducts(list = products) {
 <button
     class="wishlist-btn ${wishlist.includes(product.id) ? "active" : ""}"
     onclick="toggleWishlist(${product.id})"
-    title="${wishlist.includes(product.id) ? "Remove from Wishlist" : "Add to Wishlist"}">
-    <i class="${wishlist.includes(product.id) ? "fa-solid" : "fa-regular"} fa-heart"></i>
+    title="Wishlist">
+    ♥
 </button>
 
 </div>
