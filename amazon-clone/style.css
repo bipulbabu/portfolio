@@ -1181,3 +1181,29 @@ input:focus {
     }
 }
 
+/* ===== WISHLIST HEART ===== */
+
+.wishlist-btn {
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: #777;
+    font-size: 23px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 3px 10px rgba(0,0,0,.15);
+}
+
+.wishlist-btn:hover {
+    transform: scale(1.1);
+}
+
+.wishlist-btn.active {
+    color: #e63946;
+    background: #fff0f1;
+}
+
