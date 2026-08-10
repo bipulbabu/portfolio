@@ -68,6 +68,12 @@
     <i class="fa-solid fa-user"></i>
     Login
 </button>
+
+    <button class="wishlist-header-btn" onclick="openWishlist()">
+    <i class="fa-solid fa-heart"></i>
+    <span id="wishlistCount">0</span>
+    Wishlist
+</button>
     
     <div class="cart" onclick="openCart()">
         <i class="fa-solid fa-cart-shopping"></i>
@@ -257,6 +263,25 @@
 
 </footer>
 
+    <!-- WISHLIST -->
+<div class="wishlist-overlay" id="wishlistOverlay">
+
+    <div class="wishlist-panel">
+
+        <button class="wishlist-close" onclick="closeWishlist()">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+
+        <h2>
+            <i class="fa-solid fa-heart"></i>
+            My Wishlist
+        </h2>
+
+        <div id="wishlistItems"></div>
+
+    </div>
+
+</div>
 
 <!-- CART -->
 <div class="cart-overlay" id="cartOverlay">
