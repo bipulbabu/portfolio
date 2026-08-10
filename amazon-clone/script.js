@@ -664,36 +664,52 @@ function placeOrder() {
 const searchInput = document.getElementById("searchInput");
 const searchBtn = document.getElementById("searchBtn");
 
+
+
 function searchProducts() {
-    const searchText = searchInput.value.trim().toLowerCase();
+    const input = document.getElementById("searchInput");
+    const query = input.value.trim().toLowerCase();
 
-    const products = document.querySelectorAll(".product-card");
+    const productsSection = document.querySelector(".products");
+    const productCards = document.querySelectorAll(".product-card");
 
-    products.forEach(product => {
-        const productText = product.textContent.toLowerCase();
+    if (!query) {
+        productCards.forEach(card => {
+            card.style.display = "";
+        });
 
-        if (searchText === "" || productText.includes(searchText)) {
-            product.style.display = "";
+        if (productsSection) {
+            productsSection.scrollIntoView({
+                behavior: "smooth",
+                block: "start"
+            });
+        }
+
+        return;
+    }
+
+    let found = false;
+
+    productCards.forEach(card => {
+        const text = card.innerText.toLowerCase();
+
+        if (text.includes(query)) {
+            card.style.display = "";
+            found = true;
         } else {
-            product.style.display = "none";
+            card.style.display = "none";
         }
     });
+
+    if (found && productsSection) {
+        productsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    } else {
+        alert("Product not found");
+    }
 }
-
-if (searchInput) {
-    searchInput.addEventListener("input", searchProducts);
-
-    searchInput.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            searchProducts();
-        }
-    });
-}
-
-if (searchBtn) {
-    searchBtn.addEventListener("click", searchProducts);
-}
-
 
 
 function mobileSearchProducts() {
