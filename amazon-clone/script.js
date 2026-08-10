@@ -362,46 +362,93 @@ function filterCategory(category) {
 
 
 /* =========================
-   SEARCH
+   PRODUCT SEARCH
 ========================= */
 
+function performSearch(inputId) {
+    const input = document.getElementById(inputId);
+
+    if (!input) return;
+
+    const query = input.value.trim().toLowerCase();
+
+    const categories = document.querySelector(".categories");
+    const hero = document.querySelector(".hero");
+    const productsSection = document.getElementById("products");
+
+    if (!query) {
+        displayProducts(products);
+
+        if (categories) categories.style.display = "";
+        if (hero) hero.style.display = "";
+
+        return;
+    }
+
+    const results = products.filter(product =>
+        product.name.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query)
+    );
+
+    if (results.length === 0) {
+        displayProducts([]);
+        showToast("No product found");
+        return;
+    }
+
+    /* Search result ko sabse pehle dikhana */
+    if (categories) categories.style.display = "none";
+    if (hero) hero.style.display = "none";
+
+    displayProducts(results);
+
+    if (productsSection) {
+        productsSection.scrollIntoView({
+            behavior: "smooth",
+            block: "start"
+        });
+    }
+}
+
+
+/* Desktop search */
 function searchProducts() {
+    performSearch("searchInput");
+}
+
+
+/* Mobile search */
+function mobileSearchProducts() {
+    performSearch("mobileSearchInput");
+}
+
+
+/* Search with Enter */
+document.addEventListener("DOMContentLoaded", () => {
 
     const searchInput =
         document.getElementById("searchInput");
 
-    const categorySelect =
-        document.getElementById("category");
+    const mobileSearchInput =
+        document.getElementById("mobileSearchInput");
 
-    if (!searchInput || !categorySelect) return;
-
-    const search =
-        searchInput.value.trim().toLowerCase();
-
-    const category =
-        categorySelect.value;
-
-    const result = products.filter(product => {
-
-        const matchesSearch =
-            product.name
-                .toLowerCase()
-                .includes(search);
-
-        const matchesCategory =
-            category === "all" ||
-            product.category === category;
-
-        return matchesSearch && matchesCategory;
-    });
-
-    displayProducts(result);
-
-    document.getElementById("products")
-        ?.scrollIntoView({
-            behavior: "smooth"
+    if (searchInput) {
+        searchInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                searchProducts();
+            }
         });
-}
+    }
+
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener("keydown", event => {
+            if (event.key === "Enter") {
+                mobileSearchProducts();
+            }
+        });
+    }
+
+});
 
 
 /* =========================
@@ -659,108 +706,8 @@ function placeOrder() {
     showToast("Order placed successfully! 🎉");
 }
 
-// ===== PRODUCT SEARCH =====
-
-const searchInput = document.getElementById("searchInput");
-const searchBtn = document.getElementById("searchBtn");
 
 
-
-function searchProducts() {
-    const input = document.getElementById("searchInput");
-    const query = input.value.trim().toLowerCase();
-
-    const productsSection = document.querySelector(".products");
-    const productCards = document.querySelectorAll(".product-card");
-
-    if (!query) {
-        productCards.forEach(card => {
-            card.style.display = "";
-        });
-
-        if (productsSection) {
-            productsSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }
-
-        return;
-    }
-
-    let found = false;
-
-    productCards.forEach(card => {
-        const text = card.innerText.toLowerCase();
-
-        if (text.includes(query)) {
-            card.style.display = "";
-            found = true;
-        } else {
-            card.style.display = "none";
-        }
-    });
-
-    if (found && productsSection) {
-        productsSection.scrollIntoView({
-            behavior: "smooth",
-            block: "start"
-        });
-    } else {
-        alert("Product not found");
-    }
-}
-
-
-function mobileSearchProducts() {
-    const input = document.getElementById("mobileSearchInput");
-    const query = input.value.trim().toLowerCase();
-
-    const products = document.querySelectorAll(".product-card");
-    const categories = document.querySelector(".categories");
-    const hero = document.querySelector(".hero");
-    const productsSection = document.querySelector(".products");
-
-    if (!query) {
-        products.forEach(product => {
-            product.style.display = "";
-        });
-
-        if (categories) categories.style.display = "";
-        if (hero) hero.style.display = "";
-
-        return;
-    }
-
-    let found = false;
-
-    products.forEach(product => {
-        const productText = product.innerText.toLowerCase();
-
-        if (productText.includes(query)) {
-            product.style.display = "";
-            found = true;
-        } else {
-            product.style.display = "none";
-        }
-    });
-
-    if (found) {
-        // Hide sections before search results
-        if (categories) categories.style.display = "none";
-        if (hero) hero.style.display = "none";
-
-        // Go directly to products
-        if (productsSection) {
-            productsSection.scrollIntoView({
-                behavior: "smooth",
-                block: "start"
-            });
-        }
-    } else {
-        alert("No products found for: " + input.value);
-    }
-}
 
 
 
