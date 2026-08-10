@@ -127,12 +127,13 @@ function displayProducts(list = products) {
             <div class="product-image">
     ${product.icon}
 
-    <button
-        class="wishlist-btn"
-        onclick="toggleWishlist(${product.id})"
-        title="Add to Wishlist">
-        <i class="fa-solid fa-heart"></i>
-    </button>
+<button
+    class="wishlist-btn ${wishlist.includes(product.id) ? "active" : ""}"
+    onclick="toggleWishlist(${product.id})"
+    title="${wishlist.includes(product.id) ? "Remove from Wishlist" : "Add to Wishlist"}">
+    <i class="${wishlist.includes(product.id) ? "fa-solid" : "fa-regular"} fa-heart"></i>
+</button>
+
 </div>
 
             <div class="product-info">
