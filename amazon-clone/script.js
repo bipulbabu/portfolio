@@ -96,6 +96,89 @@ function toggleWishlist(id) {
     );
 
     displayProducts();
+    updateWishlistCount();
+displayWishlist();
+}
+
+/* =========================
+   WISHLIST PANEL
+========================= */
+
+function updateWishlistCount() {
+    const count = document.getElementById("wishlistCount");
+
+    if (count) {
+        count.textContent = wishlist.length;
+    }
+}
+
+
+function openWishlist() {
+    const overlay = document.getElementById("wishlistOverlay");
+
+    if (overlay) {
+        overlay.style.display = "flex";
+    }
+
+    displayWishlist();
+}
+
+
+function closeWishlist() {
+    const overlay = document.getElementById("wishlistOverlay");
+
+    if (overlay) {
+        overlay.style.display = "none";
+    }
+}
+
+
+function displayWishlist() {
+
+    const container = document.getElementById("wishlistItems");
+
+    if (!container) return;
+
+    const savedProducts = products.filter(product =>
+        wishlist.includes(product.id)
+    );
+
+    if (savedProducts.length === 0) {
+
+        container.innerHTML = `
+            <div class="wishlist-empty">
+                <i class="fa-regular fa-heart"></i>
+                <h3>Your wishlist is empty</h3>
+                <p>Add products you love ❤️</p>
+            </div>
+        `;
+
+        return;
+    }
+
+    container.innerHTML = savedProducts.map(product => `
+
+        <div class="wishlist-item">
+
+            <div class="wishlist-item-info">
+
+                <h3>${product.icon} ${product.name}</h3>
+
+                <strong>
+                    ₹${product.price.toLocaleString("en-IN")}
+                </strong>
+
+            </div>
+
+            <button
+                class="wishlist-remove"
+                onclick="toggleWishlist(${product.id})">
+                <i class="fa-solid fa-trash"></i>
+            </button>
+
+        </div>
+
+    `).join("");
 }
 
 /* =========================
@@ -802,7 +885,7 @@ function placeOrder() {
     showToast("Order placed successfully! 🎉");
 }
 
-
+updateWishlistCount();
 
 
 
