@@ -216,35 +216,94 @@ function updateCart() {
         return;
     }
 
-    cartItems.innerHTML = cart.map((item, index) => `
+    /* Group same products */
+    const groupedCart = {};
 
-        <div class="cart-item">
+    cart.forEach(item => {
+        if (!groupedCart[item.id]) {
+            groupedCart[item.id] = {
+                product: item,
+                quantity: 0
+            };
+        }
 
-            <div>
-                <strong>${item.name}</strong>
+        groupedCart[item.id].quantity++;
+    });
 
-                <br>
+    cartItems.innerHTML = Object.values(groupedCart).map(item => {
 
-                <span>
-                    ₹${item.price.toLocaleString("en-IN")}
-                </span>
-            </div>
+        const product = item.product;
+        const quantity = item.quantity;
 
-            <button
-                onclick="removeFromCart(${index})"
-                title="Remove item"
-                style="
-                    border:0;
-                    background:none;
-                    cursor:pointer;
-                    font-size:16px;
+        return `
+            <div class="cart-item">
+
+                <div>
+                    <strong>${product.name}</strong>
+
+                    <br>
+
+                    <span>
+                        ₹${product.price.toLocaleString("en-IN")}
+                    </span>
+                </div>
+
+                <div style="
+                    display:flex;
+                    align-items:center;
+                    gap:10px;
+                    margin-left:15px;
                 ">
-                <i class="fa-solid fa-trash"></i>
-            </button>
 
-        </div>
+                    <button
+                        onclick="changeQuantity(${product.id}, -1)"
+                        style="
+                            width:30px;
+                            height:30px;
+                            border:1px solid #ddd;
+                            background:white;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-size:18px;
+                        ">
+                        −
+                    </button>
 
-    `).join("");
+                    <strong>${quantity}</strong>
+
+                    <button
+                        onclick="changeQuantity(${product.id}, 1)"
+                        style="
+                            width:30px;
+                            height:30px;
+                            border:1px solid #ddd;
+                            background:white;
+                            border-radius:6px;
+                            cursor:pointer;
+                            font-size:18px;
+                        ">
+                        +
+                    </button>
+
+                    <button
+                        onclick="removeProductFromCart(${product.id})"
+                        title="Remove item"
+                        style="
+                            border:0;
+                            background:none;
+                            cursor:pointer;
+                            font-size:16px;
+                            margin-left:5px;
+                        ">
+                        🗑️
+                    </button>
+
+                </div>
+
+            </div>
+        `;
+
+    }).join("");
 
     const total = cart.reduce(
         (sum, item) => sum + item.price,
@@ -254,6 +313,42 @@ function updateCart() {
     cartTotal.textContent =
         `₹${total.toLocaleString("en-IN")}`;
 }
+
+
+function changeQuantity(id, change) {
+
+    const product = products.find(item => item.id === id);
+
+    if (!product) return;
+
+    if (change === 1) {
+
+        cart.push(product);
+
+    } else if (change === -1) {
+
+        const index = cart.findIndex(item => item.id === id);
+
+        if (index !== -1) {
+            cart.splice(index, 1);
+        }
+    }
+
+    saveCart();
+    updateCart();
+}
+
+
+function removeProductFromCart(id) {
+
+    cart = cart.filter(item => item.id !== id);
+
+    saveCart();
+    updateCart();
+
+    showToast("Product removed from cart");
+}
+
 
 
 /* =========================
