@@ -1207,3 +1207,27 @@ input:focus {
     background: #fff0f1;
 }
 
+/* ===== FIX WISHLIST ACTIVE STATE ===== */
+
+.wishlist-btn {
+    color: #777 !important;
+    background: #fff !important;
+}
+
+.wishlist-btn.active {
+    color: #e63946 !important;
+    background: #fff0f1 !important;
+}
+
+.wishlist-btn.active span {
+    color: #e63946 !important;
+}
+
+.wishlist-btn:hover {
+    color: #e63946 !important;
+}
+
+.wishlist-btn.active:hover {
+    color: #e63946 !important;
+}
+
